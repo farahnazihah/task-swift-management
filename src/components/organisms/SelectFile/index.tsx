@@ -85,6 +85,7 @@ export const SelectFile = ({ onFileSelected }: SelectFileProps) => {
           files.length > 0 &&
           files.map((file) => (
             <UploadedFile
+              key={file.Key}
               name={file.Key}
               onSelect={() => {
                 onFileSelected(`${DO_BUCKET_URL_FULL}/${file.Key}`);
