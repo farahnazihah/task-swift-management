@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 interface ModalProps {
   isOpen: boolean;
@@ -6,13 +6,13 @@ interface ModalProps {
   children?: React.ReactNode;
 }
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
   return (
-    <div className={twMerge('modal', isOpen ? 'modal-open' : '')}>
-      <div className="modal-box">{children}</div>
+    <div className={twMerge("modal", isOpen ? "modal-open" : "")}>
+      <div className="modal-box !w-full flex justify-center items-center">
+        {children}
+      </div>
       <div className="modal-backdrop" onClick={onClose} />
     </div>
   );
 };
-
-export default Modal;

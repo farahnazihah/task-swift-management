@@ -1,61 +1,71 @@
 import React, { useEffect, useState } from "react";
 
-function DragDrop() {
+export const DragDrop = () => {
   const [file, setFile] = useState<File | null>(null);
   const [message, setMessage] = useState<string>("");
+
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFile(e.target.files ? e.target.files[0] : null);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setMessage(""); // Clear previous messages
-    if (!file) {
-      setMessage("No file selected");
-      return;
-    }
+  const handleUpload = async () => {
+    if (!file) return;
 
-    const formData = new FormData();
-    formData.append("file", file);
+    setUploading(true);
+    setError(null);
 
-    try {
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+    const fileName = encodeURIComponent(file.name);
+    const fileType = file.type;
 
-      if (!res.ok) {
-        const error = await res.text(); // Changed to .text() to see the HTML response
-        console.error("Error response:", error);
-        setMessage(`Error: ${res.statusText}`);
-        return;
+    const reader = new FileReader();
+    reader.onload = async (e) => {
+      const fileContent = e.target?.result as string;
+
+      const base64File = fileContent.split(",")[1]; // Get base64 content
+
+      try {
+        const res = await fetch("/api/upload", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            file: base64File,
+            fileName,
+            fileType,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to upload file");
+
+        const data = await res.json();
+        setFileUrl(data.url);
+      } catch (error: any) {
+        setError(error.message);
+      } finally {
+        setUploading(false);
       }
+    };
 
-      const result = await res.json();
-      setMessage("File uploaded successfully");
-    } catch (error) {
-      console.error("Fetch error:", error);
-      setMessage(`Error: ${error.message}`);
-    }
+    reader.readAsDataURL(file);
   };
-
-  useEffect(() => {
-    fetch("/api/upload").then((res) => {
-      console.log(res.json());
-    });
-  }, []);
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
-      </form>
-      <div>{message}</div>
-      {file && <div>Selected file: {file.name}</div>}
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload} disabled={uploading || !file}>
+        {uploading ? "Uploading..." : "Upload"}
+      </button>
+      {error && <p>Error: {error}</p>}
+      {fileUrl && (
+        <p>
+          File uploaded to: <a href={fileUrl}>{fileUrl}</a>
+        </p>
+      )}
     </>
   );
-}
-
-export default DragDrop;
+};
