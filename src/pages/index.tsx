@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TextArea, TextInput } from "@/components/molecules";
 import { ModalSelectFile } from "@/components/organisms";
+import { useToast } from "@/providers/ToastProvider";
+import { Toast } from "@/components/atoms";
 
 export const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +18,7 @@ export const HomePage = () => {
 
   return (
     <main className="w-full flex items-center justify-center h-screen bg-white text-black">
+      <Toast />
       <div className="flex flex-col p-8 gap-4 items-center justify-center w-[600px] ">
         <TextInput placeholder="Enter Your Name" label="Name" />
         <TextArea placeholder="Enter Your Name" label="Description" />
