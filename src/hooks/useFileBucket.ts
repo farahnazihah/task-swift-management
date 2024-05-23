@@ -1,5 +1,6 @@
+import { useToast } from "@/providers/ToastProvider";
 import { FileProps } from "@/types/file";
-import axios from "axios";
+import { EnumToastType } from "@/types/global";
 import { useEffect, useState } from "react";
 
 interface errorProps {
@@ -8,6 +9,8 @@ interface errorProps {
 }
 
 export const useFileBucket = () => {
+  const { showToast } = useToast();
+
   const [files, setFiles] = useState<FileProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -28,6 +31,7 @@ export const useFileBucket = () => {
       setFiles(data);
     } catch (e) {
       console.log(e);
+      showToast("Failed to fetch files", EnumToastType.ERROR);
     } finally {
       setIsLoading(false);
     }
@@ -63,11 +67,13 @@ export const useFileBucket = () => {
 
           const data = await res.json();
 
-          await fecthGetFiles(); // update the files list
+          fecthGetFiles(); // update the files list
           resolve(data.url);
+          showToast("File uploaded successfully", EnumToastType.SUCCESS);
         } catch (e) {
           console.log(e);
           reject(e);
+          showToast("Failed to upload files", EnumToastType.ERROR);
         } finally {
           setIsLoading(false);
         }
