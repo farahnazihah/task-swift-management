@@ -22,7 +22,6 @@ export default async function handler(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.body);
     const { file, fileName, fileType } = req.body;
 
     const params = {
@@ -32,8 +31,6 @@ export default async function handler(
       ContentType: fileType,
       ACL: "public-read",
     };
-
-    console.log(params);
 
     const uploadResult = await s3Client.upload(params).promise();
 

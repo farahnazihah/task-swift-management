@@ -28,7 +28,6 @@ export const useFileBucket = () => {
       });
       if (!res) throw new Error("Failed to fetch files");
       const data: FileProps[] = await res.json();
-      console.log(data);
       setFiles(data);
       setErrors({ ...errors, getFiles: null });
     } catch (e) {
@@ -38,6 +37,7 @@ export const useFileBucket = () => {
       setIsLoading(false);
     }
   };
+
   const fetchUploadFile = (file: File) => {
     return new Promise<string>(async (resolve, reject) => {
       setIsLoading(true);

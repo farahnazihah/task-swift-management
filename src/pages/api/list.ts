@@ -24,7 +24,6 @@ export default async function handler(
     s3Client.listObjects({ Bucket: "task-challenge-2" }, (err, data) => {
       res.status(200).json(data.Contents);
     });
-    console.log("Listing files");
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Error listing files" });
