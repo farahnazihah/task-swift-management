@@ -41,7 +41,9 @@ export const useFileBucket = () => {
     return new Promise<string>(async (resolve, reject) => {
       setIsLoading(true);
 
-      const fileName = encodeURIComponent(file.name);
+      const fileName = encodeURIComponent(
+        file.name.replace(/ /g, "-").toLowerCase()
+      );
       const fileType = file.type;
 
       const reader = new FileReader();
