@@ -10,11 +10,8 @@ interface errorProps {
 export const useFileBucket = () => {
   const [files, setFiles] = useState<FileProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [errors, setErrors] = useState<errorProps>({
-    upload: null,
-    getFiles: null,
-  });
 
+  // to fetch all the files in the bucket for first time
   useEffect(() => {
     fecthGetFiles();
   }, []);
@@ -29,10 +26,8 @@ export const useFileBucket = () => {
       if (!res) throw new Error("Failed to fetch files");
       const data: FileProps[] = await res.json();
       setFiles(data);
-      setErrors({ ...errors, getFiles: null });
     } catch (e) {
       console.log(e);
-      setErrors({ ...errors, getFiles: "Failed to fetch files" });
     } finally {
       setIsLoading(false);
     }
@@ -67,13 +62,11 @@ export const useFileBucket = () => {
           if (!res.ok) throw new Error("Failed to upload file");
 
           const data = await res.json();
-          setErrors({ ...errors, upload: null });
 
-          await fecthGetFiles();
+          await fecthGetFiles(); // update the files list
           resolve(data.url);
         } catch (e) {
           console.log(e);
-          setErrors({ ...errors, upload: "Failed to upload file" });
           reject(e);
         } finally {
           setIsLoading(false);
@@ -89,5 +82,5 @@ export const useFileBucket = () => {
     });
   };
 
-  return { files, isLoading, errors, fetchUploadFile };
+  return { files, isLoading, fetchUploadFile };
 };
