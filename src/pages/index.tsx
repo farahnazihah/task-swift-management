@@ -2,17 +2,12 @@
 
 import { useState } from "react";
 
-import { Modal } from "@/components/atoms";
 import { TextArea, TextInput } from "@/components/molecules";
-import { SelectFile } from "@/components/organisms";
+import { ModalSelectFile } from "@/components/organisms";
 
 export const HomePage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>();
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   const handleSelectFile = (url: string) => {
     setSelectedFile(url);
@@ -50,9 +45,11 @@ export const HomePage = () => {
             </button>
           )}
         </div>
-        <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-          <SelectFile onFileSelected={handleSelectFile} />
-        </Modal>
+        <ModalSelectFile
+          isModalOpen={isModalOpen}
+          onCloseModal={() => setIsModalOpen(false)}
+          onFileSelected={handleSelectFile}
+        />
       </div>
     </main>
   );

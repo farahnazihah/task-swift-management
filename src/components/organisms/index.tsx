@@ -1,1 +1,1 @@
-export * from "./SelectFile";
+export * from "./ModalSelectFile";
