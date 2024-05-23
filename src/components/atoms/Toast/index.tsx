@@ -8,7 +8,7 @@ export const Toast = ({}) => {
   return (
     <div className="toast toast-top toast-center">
       {toasts.map((toast) => (
-        <div className={`alert alert-${toast.type}`}>
+        <div className={`alert alert-${toast.type}`} key={toast.message}>
           <span>{toast.message}</span>
         </div>
       ))}
