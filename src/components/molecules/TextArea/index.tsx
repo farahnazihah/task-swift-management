@@ -1,4 +1,4 @@
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 interface TextInputProps {
   label: string;
@@ -9,10 +9,10 @@ const TextArea = ({ placeholder, className, label }: TextInputProps) => {
   return (
     <>
       <div className="flex flex-col w-full">
-        <text className="pl-1">{label}</text>
+        <p className="pl-1">{label}</p>
         <textarea
           placeholder={placeholder}
-          className={twMerge('textarea textarea-bordered ', className)}
+          className={twMerge("textarea textarea-bordered ", className)}
         />
       </div>
     </>
