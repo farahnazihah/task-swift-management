@@ -1,11 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { TextArea, TextInput } from "@/components/molecules";
 import { ModalSelectFile } from "@/components/organisms";
+import { useToast } from "@/providers/ToastProvider";
+import { EnumToastType } from "@/types/global";
 
 export const HomePage = () => {
+  const { showToast } = useToast();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string | null>();
 
@@ -13,6 +17,10 @@ export const HomePage = () => {
     setSelectedFile(url);
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    showToast("Hello World", EnumToastType.SUCCESS);
+  }, []);
 
   return (
     <main className="w-full flex items-center justify-center h-screen bg-white text-black">

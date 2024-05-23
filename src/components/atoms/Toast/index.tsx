@@ -1,15 +1,12 @@
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/providers/ToastProvider";
 
 export const Toast = ({}) => {
-  const { showToast, toasts } = useToast();
-
-  console.log(toasts);
-
+  const { toast } = useToast();
   return (
     <div className="toast toast-top toast-center">
-      {toasts.map((toast) => (
-        <div className={`alert alert-${toast.type}`} key={toast.message}>
-          <span>{toast.message}</span>
+      {toast.map((t) => (
+        <div className={`alert alert-${t.type}`} key={t.message}>
+          <span>{t.message}</span>
         </div>
       ))}
     </div>
