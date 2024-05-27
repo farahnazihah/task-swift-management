@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { TextArea, TextInput } from "@/components/molecules";
+import { TextArea, TextInput } from "@/components/atoms";
 import { ModalSelectFile } from "@/components/organisms";
 import { useToast } from "@/providers/ToastProvider";
 import { Toast } from "@/components/atoms";

@@ -3,23 +3,18 @@ import { FileProps } from "@/types/file";
 import { EnumToastType } from "@/types/global";
 import { useEffect, useState } from "react";
 
-interface errorProps {
-  upload: string | null;
-  getFiles: string | null;
-}
-
 export const useFileBucket = () => {
   const { showToast } = useToast();
 
   const [files, setFiles] = useState<FileProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  // to fetch all the files in the bucket for first time
+  // to fetch all the files in the bucket for the first time
   useEffect(() => {
-    fecthGetFiles();
+    fetchGetFiles();
   }, []);
 
-  const fecthGetFiles = async () => {
+  const fetchGetFiles = async () => {
     setIsLoading(true);
 
     try {
@@ -30,7 +25,7 @@ export const useFileBucket = () => {
       const data: FileProps[] = await res.json();
       setFiles(data);
     } catch (e) {
-      console.log(e);
+      console.error(e);
       showToast("Failed to fetch files", EnumToastType.ERROR);
     } finally {
       setIsLoading(false);
@@ -69,11 +64,11 @@ export const useFileBucket = () => {
 
           const data = await res.json();
 
-          fecthGetFiles(); // update the files list
+          fetchGetFiles(); // update the files list
           resolve(data.url);
           showToast("File uploaded successfully", EnumToastType.SUCCESS);
         } catch (e) {
-          console.log(e);
+          console.error(e);
           reject(e);
           showToast("Failed to upload files", EnumToastType.ERROR);
         } finally {
