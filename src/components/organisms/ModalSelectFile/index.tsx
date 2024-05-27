@@ -3,7 +3,7 @@ import { FileUploader } from "react-drag-drop-files";
 import { UploadedFile } from "@/components/molecules";
 import { DO_BUCKET_URL_FULL } from "@/constants/env";
 import { useFileBucket } from "@/hooks/useFileBucket";
-import { Modal } from "@/components/atoms";
+import { Loader, Modal } from "@/components/atoms";
 
 interface ModalSelectFileProps {
   onFileSelected: (url: string) => void;
@@ -27,7 +27,7 @@ export const ModalSelectFile = ({
   return (
     <Modal isOpen={isModalOpen} onClose={onCloseModal}>
       {isLoading ? (
-        <span className="loading loading-spinner loading-lg"></span>
+        <Loader />
       ) : (
         <div className="flex flex-col !w-full items-center justify-center gap-4">
           <FileUploader handleChange={handleFileChange} name="file" />
