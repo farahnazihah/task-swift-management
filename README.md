@@ -1,20 +1,8 @@
 This projects is a part of task challenge for Young Professional Exchange Program by Swift Management. This project is a simple file uploader that uploads files to DigitalOcean Spaces.
 
-## Getting Started
+### Deployment
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This application is deployed on [Vercel](https://vercel.com/) and can be accessed at [https://task-swift-management.vercel.app/](https://task-swift-management.vercel.app/).
 
 ### Configurations
 
@@ -25,6 +13,49 @@ The env variables are also included in `.env.example` file.
 DO_BUCKET_ACCESS_KEY_ID=bucket_access_key_id
 DO_BUCKET_SECRET_KEY=bucket_secret_access_key_id
 ```
+
+### Run the application localy
+
+Installing dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser, the page should look like this:
+![image](https://github.com/farahnazihah/task-swift-management/assets/52520854/c56cf099-a4d1-460b-8e97-a9599e0daacb)
+
+### Folder Structure
+
+This project’s folder structure reflects the atomic design pattern:
+
+- atoms: the smallest and most fundamental components in the design system.
+- molecules: groups of atoms that bonded together and functioning as a single unit.
+- organisms: relatively complex components composed of groups of molecules and/or atoms.
+
+```bash
+src/
+├── components/
+│   ├── atoms/
+│   │   ├── ...
+│   ├── molecules/
+│   │   ├── ...
+│   ├── organisms/
+│   │   └── ...
+│   └── index.ts
+└── hooks/
+    └── useFileBucket.ts
+└── pages/
+    └── index.tsx
+```
+
+This structure helps in organizing the components logically and makes it easier to locate, develop, and maintain them as the project evolves.
 
 #### API endpoints
 
